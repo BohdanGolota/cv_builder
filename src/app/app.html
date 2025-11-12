@@ -1,19 +1,20 @@
 <div class="app-shell">
   <header class="app-header">
-    <div class="app-header__text">
-      <h1>CV Builder</h1>
-      <p>Create polished project experience entries, preview them instantly, and export with confidence.</p>
+    <div class="branding">
+      <span class="logo">U</span>
+      <div class="heading">
+        <h1>CV Builder</h1>
+        <p>Craft a polished resume layout inspired by the Usense concept.</p>
+      </div>
     </div>
   </header>
 
   <main class="app-main">
-    <section class="app-main__column form-column">
-      <app-projects />
+    <section class="form-panel">
+      <app-cv-form />
     </section>
-    <section class="app-main__column preview-column">
-      <app-preview />
+    <section class="preview-panel">
+      <app-cv-preview />
     </section>
   </main>
 </div>
-
-<router-outlet />

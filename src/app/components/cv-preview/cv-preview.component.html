@@ -1,0 +1,109 @@
+<section class="preview-shell">
+  <header class="preview-toolbar">
+    <div>
+      <h2>CV Preview</h2>
+      <p>Changes appear as you type. Export when you are satisfied.</p>
+    </div>
+    <button mat-flat-button color="primary" type="button" (click)="exportAsPdf()">
+      <mat-icon fontIcon="picture_as_pdf" />
+      Export as PDF
+    </button>
+  </header>
+
+  <div class="preview-canvas" #previewRef>
+    <div class="top-section">
+      <div class="identity-block">
+        <div class="avatar" [class.avatar--empty]="!cvData().photoUrl">
+          @if (cvData().photoUrl; as photo) {
+            <img [src]="photo" alt="Profile photo" />
+          } @else {
+            <mat-icon fontIcon="person" />
+          }
+        </div>
+        <div class="headline">
+          <h1>{{ cvData().fullName || 'Your Name' }}</h1>
+          <h2>{{ cvData().position || 'Your Role' }}</h2>
+          <p>{{ cvData().summary || 'Write a concise summary describing your strengths and expertise.' }}</p>
+        </div>
+      </div>
+
+      <aside class="sidebar">
+        <section class="sidebar-section">
+          <h3>Languages</h3>
+          <ul>
+            @if (cvData().languages.length) {
+              @for (language of cvData().languages; track trackByIndex; let i = $index) {
+                <li>{{ language }}</li>
+              }
+            } @else {
+              <li>Add your language proficiencies.</li>
+            }
+          </ul>
+        </section>
+
+        <section class="sidebar-section">
+          <h3>Tools / Technologies</h3>
+          <div class="chip-grid">
+            @if (cvData().technologies.length) {
+              @for (tech of cvData().technologies; track trackByIndex; let i = $index) {
+                <span class="chip">{{ tech }}</span>
+              }
+            } @else {
+              <span class="chip chip--empty">Add skills to showcase your toolkit.</span>
+            }
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <section class="experience-section">
+      <h3>Work Experience</h3>
+      @if (cvData().experiences.length) {
+        @for (experience of cvData().experiences; track trackByIndex; let i = $index) {
+          <article class="experience-card">
+            <header>
+              <div>
+                <h4>
+                  {{ experience.projectName }}
+                  <span class="role-separator">|</span>
+                  <span class="role">{{ experience.role }}</span>
+                </h4>
+                <p class="dates">{{ experience.dates }}</p>
+              </div>
+            </header>
+            <p class="description">{{ experience.description }}</p>
+            @if (experience.bullets.length) {
+              <ul class="bullet-list">
+                @for (bullet of experience.bullets; track trackByIndex; let j = $index) {
+                  <li>{{ bullet }}</li>
+                }
+              </ul>
+            }
+            @if (experience.technologies.length) {
+              <div class="experience-tech">
+                <span class="label">Tech:</span>
+                <div class="tech-badges">
+                  @for (tech of experience.technologies; track trackByIndex; let j = $index) {
+                    <span class="tech-pill">{{ tech }}</span>
+                  }
+                </div>
+              </div>
+            }
+            @if (experience.iconUrls?.length) {
+              <div class="icon-row">
+                @for (icon of experience.iconUrls; track trackByIndex; let j = $index) {
+                  <img class="tech-icon" [src]="icon" alt="Technology icon {{ j + 1 }}" />
+                }
+              </div>
+            }
+          </article>
+        }
+      } @else {
+        <p class="empty-state">
+          Add your first work experience in the form to see it appear here in real-time.
+        </p>
+      }
+    </section>
+  </div>
+</section>
+

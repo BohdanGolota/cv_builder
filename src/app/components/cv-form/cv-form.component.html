@@ -1,0 +1,262 @@
+<form class="form-shell" [formGroup]="cvForm" novalidate>
+  <mat-card class="section-card">
+    <mat-card-header>
+      <mat-card-title>Personal Details</mat-card-title>
+      <mat-card-subtitle>Introduce yourself and describe your profile.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="section-content">
+      <div class="personal-grid">
+        <mat-form-field appearance="fill">
+          <mat-label>Full name</mat-label>
+          <input matInput formControlName="fullName" placeholder="Rustam Aslanov" />
+          @if (cvForm.controls.fullName.invalid && cvForm.controls.fullName.touched) {
+            <mat-error>Full name is required.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Position title</mat-label>
+          <input matInput formControlName="position" placeholder="Front-End Developer" />
+          @if (cvForm.controls.position.invalid && cvForm.controls.position.touched) {
+            <mat-error>Position title is required.</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Short description</mat-label>
+        <textarea
+          matInput
+          formControlName="summary"
+          rows="3"
+          placeholder="FullStack React&Node.Js developer with almost 6 years of experience."
+        ></textarea>
+        @if (cvForm.controls.summary.invalid && cvForm.controls.summary.touched) {
+          <mat-error>Provide a short summary.</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="photo-upload">
+        <div class="photo-preview" [class.photo-preview--empty]="!cvForm.controls.photoUrl.value">
+          @if (cvForm.controls.photoUrl.value; as photo) {
+            <img [src]="photo" alt="Profile photo preview" />
+          } @else {
+            <span class="placeholder-icon">
+              <mat-icon fontIcon="person" />
+            </span>
+          }
+        </div>
+
+        <div class="photo-actions">
+          <button mat-stroked-button type="button" color="primary" (click)="fileInput.click()">
+            <mat-icon fontIcon="upload" />
+            Upload photo
+          </button>
+          <button
+            mat-button
+            type="button"
+            color="warn"
+            (click)="clearPhoto()"
+            [disabled]="!cvForm.controls.photoUrl.value"
+          >
+            <mat-icon fontIcon="delete" />
+            Remove
+          </button>
+          <input
+            #fileInput
+            type="file"
+            accept="image/*"
+            hidden
+            (change)="onPhotoSelected($event)"
+          />
+          <small>Recommended square image, JPG or PNG.</small>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="section-card">
+    <mat-card-header>
+      <mat-card-title>Languages</mat-card-title>
+      <mat-card-subtitle>Add languages and proficiency levels.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="section-content">
+      <div class="dynamic-list" formArrayName="languages">
+        @for (languageControl of languagesArray().controls; track trackByIndex; let i = $index) {
+          <div class="dynamic-row">
+            <mat-form-field appearance="fill">
+              <mat-label>Language and level</mat-label>
+              <input matInput [formControl]="languageControl" placeholder="Ukrainian - Native" />
+            </mat-form-field>
+            <button
+              mat-icon-button
+              type="button"
+              color="warn"
+              (click)="removeLanguage(i)"
+              matTooltip="Remove language"
+              [disabled]="languagesArray().length <= 1"
+            >
+              <mat-icon fontIcon="delete" />
+            </button>
+          </div>
+        }
+        <button mat-stroked-button type="button" color="primary" (click)="addLanguage()">
+          <mat-icon fontIcon="add" />
+          Add language
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="section-card">
+    <mat-card-header>
+      <mat-card-title>Tools & Technologies</mat-card-title>
+      <mat-card-subtitle>List the skills to highlight on your CV.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="section-content">
+      <div class="dynamic-list" formArrayName="technologies">
+        @for (techControl of technologiesArray().controls; track trackByIndex; let i = $index) {
+          <div class="dynamic-row">
+            <mat-form-field appearance="fill">
+              <mat-label>Technology</mat-label>
+              <input matInput [formControl]="techControl" placeholder="TypeScript" />
+            </mat-form-field>
+            <button
+              mat-icon-button
+              type="button"
+              color="warn"
+              matTooltip="Remove technology"
+              (click)="removeTechnology(i)"
+              [disabled]="technologiesArray().length <= 1"
+            >
+              <mat-icon fontIcon="delete" />
+            </button>
+          </div>
+        }
+        <button mat-stroked-button type="button" color="primary" (click)="addTechnology()">
+          <mat-icon fontIcon="add" />
+          Add technology
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="section-card">
+    <mat-card-header>
+      <mat-card-title>Work Experience</mat-card-title>
+      <mat-card-subtitle>
+        Capture detailed experience entries with project context and achievements.
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="section-content experiences-section" formArrayName="experiences">
+      @for (experienceGroup of experiencesArray().controls; track trackByIndex; let i = $index) {
+        <mat-card class="experience-card" [formGroup]="experienceGroup">
+          <mat-card-header>
+            <mat-card-title>Experience #{{ i + 1 }}</mat-card-title>
+            <button
+              mat-stroked-button
+              type="button"
+              color="warn"
+              (click)="removeExperience(i)"
+              matTooltip="Remove experience"
+            >
+              <mat-icon fontIcon="delete" />
+              Remove
+            </button>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="experience-grid">
+              <mat-form-field appearance="fill">
+                <mat-label>Project / Company</mat-label>
+                <input matInput formControlName="projectName" placeholder="FRAMEUP" />
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>Role</mat-label>
+                <input matInput formControlName="role" placeholder="Full Stack Developer" />
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Dates</mat-label>
+              <input matInput formControlName="dates" placeholder="March 2024 - June 2025" />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Project description</mat-label>
+              <textarea matInput rows="3" formControlName="description"></textarea>
+            </mat-form-field>
+
+            <div class="subsection">
+              <header class="subsection__header">
+                <h4>Responsibilities / Achievements</h4>
+                <button mat-mini-fab type="button" color="primary" (click)="addBullet(i)">
+                  <mat-icon fontIcon="add" />
+                </button>
+              </header>
+              <div class="dynamic-list" formArrayName="bullets">
+                @for (bulletControl of experienceGroup.controls.bullets.controls; track trackByIndex; let j = $index) {
+                  <div class="dynamic-row">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Bullet point</mat-label>
+                      <textarea matInput [formControl]="bulletControl" rows="2"></textarea>
+                    </mat-form-field>
+                    <button
+                      mat-icon-button
+                      type="button"
+                      matTooltip="Remove bullet"
+                      color="warn"
+                      (click)="removeBullet(i, j)"
+                    >
+                      <mat-icon fontIcon="delete" />
+                    </button>
+                  </div>
+                }
+              </div>
+            </div>
+
+            <div class="subsection">
+              <header class="subsection__header">
+                <h4>Technologies used</h4>
+                <button
+                  mat-mini-fab
+                  type="button"
+                  color="primary"
+                  (click)="addExperienceTechnology(i)"
+                >
+                  <mat-icon fontIcon="add" />
+                </button>
+              </header>
+              <div class="dynamic-list" formArrayName="technologies">
+                @if (experienceGroup.controls.technologies.length === 0) {
+                  <p class="helper">Add tools or stacks applied in this role.</p>
+                }
+                @for (techControl of experienceGroup.controls.technologies.controls; track trackByIndex; let j = $index) {
+                  <div class="dynamic-row">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Technology</mat-label>
+                      <input matInput [formControl]="techControl" />
+                    </mat-form-field>
+                    <button
+                      mat-icon-button
+                      type="button"
+                      color="warn"
+                      (click)="removeExperienceTechnology(i, j)"
+                    >
+                      <mat-icon fontIcon="delete" />
+                    </button>
+                  </div>
+                }
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+
+      <button mat-raised-button type="button" color="primary" (click)="addExperience()">
+        <mat-icon fontIcon="add" />
+        Add experience
+      </button>
+    </mat-card-content>
+  </mat-card>
+</form>
+

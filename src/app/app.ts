@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { ProjectsComponent } from './components/projects/projects';
-import { PreviewComponent } from './components/preview/preview';
+import { CvFormComponent } from './components/cv-form/cv-form.component';
+import { CvPreviewComponent } from './components/cv-preview/cv-preview.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ProjectsComponent, PreviewComponent],
+  imports: [CvFormComponent, CvPreviewComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
