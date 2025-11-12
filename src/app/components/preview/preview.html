@@ -1,0 +1,64 @@
+<section class="preview-wrapper">
+  <header class="preview-header">
+    <div>
+      <h2>Live Preview</h2>
+      <p class="preview-subtitle">Review how your project experience will appear on the final CV.</p>
+    </div>
+  </header>
+
+  @if (projects().length) {
+    <div class="projects-preview">
+      @for (project of projects(); track trackByProject($index); let i = $index) {
+        <mat-card class="preview-card">
+          <div class="preview-card__header">
+            <div class="preview-card__title">
+              <h3>{{ project.name || ('Project ' + (i + 1)) }}</h3>
+              @if (project.role) {
+                <p class="role">{{ project.role }}</p>
+              }
+              @if (formatProjectPeriod(project.startDate, project.endDate); as period) {
+                <p class="timeline">{{ period }}</p>
+              }
+            </div>
+
+            @if (project.photo) {
+              <div class="preview-card__photo">
+                <img [src]="project.photo" alt="Photo for {{ project.name || ('project ' + (i + 1)) }}" />
+              </div>
+            }
+          </div>
+
+          <mat-card-content class="preview-card__content">
+            @if (project.description) {
+              <p class="description">{{ project.description }}</p>
+            }
+
+            @if (project.responsibilities.length) {
+              <ul class="responsibilities">
+                @for (item of project.responsibilities; track trackByIndex($index)) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            }
+
+            @if (project.technologies.length) {
+              <p class="technologies">
+                <span class="label">Technologies:</span>
+                <span class="chips">
+                  @for (tech of project.technologies; track trackByIndex($index)) {
+                    <span class="chip">{{ tech }}</span>
+                  }
+                </span>
+              </p>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  } @else {
+    <div class="empty-state">
+      <p>No projects yet. Add your first project to populate the preview.</p>
+    </div>
+  }
+</section>
+
