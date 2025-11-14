@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { CvData } from '../models/cv-data';
 
 const INITIAL_DATA: CvData = {
-  fullName: 'Rustam Aslanov',
+  fullName: 'New Developer',
   position: 'Front-End Developer',
   summary: 'FullStack React&Node.Js developer with almost 6 years of experience.',
   photoUrl: null,

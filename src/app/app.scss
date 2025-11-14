@@ -65,7 +65,7 @@
 
 .app-main {
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  grid-template-columns: minmax(0, 0.5fr) minmax(0, 1.05fr);
   gap: 2.25rem;
   align-items: start;
 }

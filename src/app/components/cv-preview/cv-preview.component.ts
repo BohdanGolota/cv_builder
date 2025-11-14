@@ -48,24 +48,14 @@ export class CvPreviewComponent {
     });
 
     const imageData = canvas.toDataURL('image/png');
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const pageWidth = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
+    
+    const pageWidth = 210;
     const ratio = pageWidth / canvas.width;
-    const imgHeight = canvas.height * ratio;
+    const pageHeight = canvas.height * ratio;
 
-    let position = 0;
-    let heightLeft = imgHeight;
+    const pdf = new jsPDF('p', 'mm', [pageWidth, pageHeight]);
 
-    pdf.addImage(imageData, 'PNG', 0, position, pageWidth, imgHeight, '', 'FAST');
-    heightLeft -= pageHeight;
-
-    while (heightLeft > 0) {
-      position = heightLeft - imgHeight;
-      pdf.addPage();
-      pdf.addImage(imageData, 'PNG', 0, position, pageWidth, imgHeight, '', 'FAST');
-      heightLeft -= pageHeight;
-    }
+    pdf.addImage(imageData, 'PNG', 0, 0, pageWidth, pageHeight, '', 'FAST');
 
     pdf.save('rustam-aslanov-cv.pdf');
   }
