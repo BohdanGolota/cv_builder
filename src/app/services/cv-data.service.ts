@@ -44,7 +44,7 @@ const INITIAL_DATA: CvData = {
   ],
   experiences: [
     {
-      projectName: 'FRAMEUP',
+      projectName: 'Project name',
       role: 'Full Stack Developer',
       dates: 'March 2024 – June 2025',
       description:
@@ -63,22 +63,7 @@ const INITIAL_DATA: CvData = {
         'assets/icons/nodejs.svg',
         'assets/icons/typescript.svg',
       ],
-    },
-    {
-      projectName: 'WORKNEST',
-      role: 'Full Stack Developer',
-      dates: 'August 2023 – March 2024',
-      description:
-        'A platform for storing the works of designers and developers, with authorization, editing, filtering, searching etc. Includes an admin panel for content and user management. The main goal is to have a beautiful project preview and opportunity to share a selection of works at once.',
-      bullets: [
-        'Implement secure authorization systems to allow users to register, log in, and manage their portfolios;',
-        'Portfolio Management and Editing Features: Develop functionalities for users to upload, edit, and organize their projects;',
-        'Advanced Search and Filtering Systems: Design and build search and filtering features that allow users and visitors to easily find projects based on categories, tags, skills, or project types;',
-        'Improved system performance by implementing scalable architecture from the start, ensuring the app handled high user load without degradation;',
-        'Admin Panel Development.',
-      ],
-      technologies: ['Angular', 'NestJS', 'PostgreSQL', 'Redis', 'Azure', 'Docker'],
-    },
+    }
   ],
 };
 
